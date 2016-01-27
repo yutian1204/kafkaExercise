@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>/home/jackewang/logs/exam2.log</file>
+        <encoder charset="UTF-8">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss} %thread %-5p %c{36}:%L %X{username}] %m%n</pattern>
+        </encoder>
+        <append>true</append>
+        <prudent>false</prudent>
+    </appender>
+
+    <logger name="com.crazy.jacke.common.util.MultipartFileResolver" level="INFO"/>
+    <logger name="com.crazy.jacke.web.exception.SimpleExceptionResolver" level="INFO"/>
+
+    <root level="INFO">
+        <appender-ref ref="fileAppender"/>
+    </root>
+
+</configuration>
