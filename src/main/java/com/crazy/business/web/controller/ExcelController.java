@@ -1,14 +1,13 @@
 package com.crazy.business.web.controller;
 
-import com.crazy.business.model.DbConnectionModel;
-import com.crazy.business.service.DataService;
+import com.crazy.business.service.VisitService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Author: crazy.jack
@@ -20,7 +19,7 @@ public class ExcelController {
     private static final Logger logger = LoggerFactory.getLogger(ExcelController.class);
 
     @Resource
-    private DataService dataService;
+    private VisitService visitService;
 
     @RequestMapping("redirect")
     public String redirect() {
@@ -28,15 +27,9 @@ public class ExcelController {
     }
 
     @RequestMapping("upload")
-    public String upload(String host, Integer port, String db, String table, String user, String password, MultipartFile file) {
-        DbConnectionModel dbConnectionModel = new DbConnectionModel();
-        dbConnectionModel.setHost(host);
-        dbConnectionModel.setPort(port);
-        dbConnectionModel.setDb(db);
-        dbConnectionModel.setTable(table);
-        dbConnectionModel.setUser(user);
-        dbConnectionModel.setPassword(password);
-        dataService.insert(dbConnectionModel, file);
+    public String upload(HttpServletRequest httpRequest) {
+        String remoteAddress = httpRequest.getRemoteAddr();
+        visitService.save(remoteAddress);
         return "success";
     }
 }

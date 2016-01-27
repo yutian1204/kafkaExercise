@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- kafka producer 该配置具有通用性 -->
+    <bean id="simpleProducer" class="com.crazy.common.producer.SimpleProducerImpl">
+        <property name="serverList" value="${producer.bootstrap.servers}"/>
+        <property name="ack" value="${producer.acks}"/>
+        <property name="retries" value="${producer.retries}"/>
+        <property name="batchSize" value="${producer.batch.size}"/>
+        <property name="lingerMs" value="${producer.linger.ms}"/>
+        <property name="bufferMemory" value="${producer.buffer.memory}"/>
+        <property name="keySerializer" value="${producer.key.serializer}"/>
+        <property name="valueSerializer" value="${producer.value.serializer}"/>
+    </bean>
+
+    <bean id="visitConsumer" class="com.crazy.business.consumer.VisitConsumer"/>
+
+    <!-- java.util.Map -->
+    <util:map id="consumerMap" map-class="java.util.HashMap">
+        <entry key="${visit.top}" value-ref="visitConsumer"/>
+    </util:map>
+
+
+</beans>
