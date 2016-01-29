@@ -2,10 +2,19 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/util
-       http://www.springframework.org/schema/util/spring-util.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:conf/kafka-producer.properties</value>
+                <value>classpath:conf/kafka-consumer.properties</value>
+                <value>classpath:conf/kafka-topic.properties</value>
+            </list>
+        </property>
+    </bean>
 
     <!-- kafka producer 该配置具有通用性 -->
     <bean id="simpleProducer" class="com.crazy.common.producer.SimpleProducerImpl">
@@ -23,7 +32,7 @@
 
     <!-- java.util.Map -->
     <util:map id="consumerMap" map-class="java.util.HashMap">
-        <entry key="${visit.top}" value-ref="visitConsumer"/>
+        <entry key="${visit.topic}" value-ref="visitConsumer"/>
     </util:map>
 
 

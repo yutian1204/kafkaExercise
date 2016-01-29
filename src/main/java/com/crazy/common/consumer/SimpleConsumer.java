@@ -22,19 +22,19 @@ import java.util.Properties;
 public class SimpleConsumer implements InitializingBean {
     private static final Logger logger = LoggerFactory.getLogger(SimpleConsumer.class);
 
-    @Value("${}")
+    @Value("${consumer.bootstrap.servers}")
     private String serverList;
-    @Value("${}")
+    @Value("${consumer.group.id}")
     private String groupId;
-    @Value("${}")
+    @Value("${consumer.enable.auto.commit}")
     private String enableAutoCommit;
-    @Value("${}")
+    @Value("${consumer.auto.commit.interval.ms}")
     private String autoCommitIntervalMs;
-    @Value("${}")
+    @Value("${consumer.session.timeout.ms}")
     private String sessionTimeoutMs;
-    @Value("${}")
+    @Value("${consumer.key.deserializer}")
     private String keyDeserializer;
-    @Value("${}")
+    @Value("${consumer.value.deserializer}")
     private String valueDeserializer;
     @Resource
     private Map<String, CommonConsumer> consumerMap;
@@ -44,6 +44,7 @@ public class SimpleConsumer implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         try {
+            logger.warn("Loading simple consumer start!");
             Properties props = new Properties();
             props.put("bootstrap.servers", serverList);
             props.put("group.id", groupId);
@@ -54,8 +55,9 @@ public class SimpleConsumer implements InitializingBean {
             props.put("value.deserializer", valueDeserializer);
             consumer = new KafkaConsumer<String, String>(props);
             consumer.subscribe(Lists.newArrayList(consumerMap.keySet()));
+            logger.warn("Loading simple consumer finish!");
         } catch (Exception e) {
-            logger.error("", e);
+            logger.error("Loading simple consumer exception!", e);
             throw new RuntimeException("");
         }
         while (true) {

@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletRequest;
  * Date:   15-11-24
  */
 @Controller
-@RequestMapping("/excel/")
-public class ExcelController {
-    private static final Logger logger = LoggerFactory.getLogger(ExcelController.class);
+@RequestMapping("/")
+public class VisitController {
+    private static final Logger logger = LoggerFactory.getLogger(VisitController.class);
 
     @Resource
     private VisitService visitService;
@@ -26,7 +26,7 @@ public class ExcelController {
         return "excelUpload";
     }
 
-    @RequestMapping("upload")
+    @RequestMapping("index")
     public String upload(HttpServletRequest httpRequest) {
         String remoteAddress = httpRequest.getRemoteAddr();
         visitService.save(remoteAddress);

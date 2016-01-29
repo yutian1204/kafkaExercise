@@ -28,17 +28,24 @@ public class SimpleProducerImpl implements InitializingBean, SimpleProducer {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Properties props = new Properties();
-        props.put("bootstrap.servers", serverList);
-        props.put("acks", ack);
-        props.put("retries", retries);
-        props.put("batch.size", batchSize);
-        props.put("linger.ms", lingerMs);
-        props.put("buffer.memory", bufferMemory);
-        props.put("key.serializer", keySerializer);
-        props.put("value.serializer", valueSerializer);
+        try {
+            logger.warn("Loading simple producer start!");
+            Properties props = new Properties();
+            props.put("bootstrap.servers", serverList);
+            props.put("acks", ack);
+            props.put("retries", retries);
+            props.put("batch.size", batchSize);
+            props.put("linger.ms", lingerMs);
+            props.put("buffer.memory", bufferMemory);
+            props.put("key.serializer", keySerializer);
+            props.put("value.serializer", valueSerializer);
 
-        producer = new KafkaProducer<String, String>(props);
+            producer = new KafkaProducer<String, String>(props);
+            logger.warn("Loading simple producer finish!");
+        } catch (Exception e) {
+            logger.error("Loading simple producer exception!", e);
+            throw new RuntimeException("");
+        }
     }
 
     public void setServerList(String serverList) {
@@ -49,20 +56,20 @@ public class SimpleProducerImpl implements InitializingBean, SimpleProducer {
         this.ack = ack;
     }
 
-    public void setRetries(Integer retries) {
-        this.retries = retries;
+    public void setRetries(String retries) {
+        this.retries = Integer.valueOf(retries);
     }
 
-    public void setBatchSize(Integer batchSize) {
-        this.batchSize = batchSize;
+    public void setBatchSize(String batchSize) {
+        this.batchSize = Integer.valueOf(batchSize);
     }
 
-    public void setLingerMs(Integer lingerMs) {
-        this.lingerMs = lingerMs;
+    public void setLingerMs(String lingerMs) {
+        this.lingerMs = Integer.valueOf(lingerMs);
     }
 
-    public void setBufferMemory(Integer bufferMemory) {
-        this.bufferMemory = bufferMemory;
+    public void setBufferMemory(String bufferMemory) {
+        this.bufferMemory = Integer.valueOf(bufferMemory);
     }
 
     public void setKeySerializer(String keySerializer) {
