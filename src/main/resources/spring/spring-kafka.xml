@@ -12,6 +12,7 @@
                 <value>classpath:conf/kafka-producer.properties</value>
                 <value>classpath:conf/kafka-consumer.properties</value>
                 <value>classpath:conf/kafka-topic.properties</value>
+                <value>classpath:conf/system.properties</value>
             </list>
         </property>
     </bean>

@@ -1,6 +1,7 @@
 package com.crazy.common.consumer;
 
 import com.google.common.collect.Lists;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Author: crazy.jack
@@ -36,10 +39,13 @@ public class SimpleConsumer implements InitializingBean {
     private String keyDeserializer;
     @Value("${consumer.value.deserializer}")
     private String valueDeserializer;
-    @Resource
-    private Map<String, CommonConsumer> consumerMap;
+
+    private static final ExecutorService SINGLE_THREAD_EXECUTOR = Executors.newSingleThreadExecutor(new ThreadFactoryBuilder().setNameFormat("Kafka-Common-Consumer").build());
 
     private KafkaConsumer<String, String> consumer;
+
+    @Resource
+    private Map<String, CommonConsumer> consumerMap;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -60,17 +66,22 @@ public class SimpleConsumer implements InitializingBean {
             logger.error("Loading simple consumer exception!", e);
             throw new RuntimeException("");
         }
-        while (true) {
-            try {
-                ConsumerRecords<String, String> records = consumer.poll(100);
-                for (ConsumerRecord<String, String> record : records) {
-                    logger.info("offset=[{}], key=[{}], value=[{}]", record.offset(), record.key(), record.value());
-                    CommonConsumer commonConsumer = consumerMap.get(record.topic());
-                    commonConsumer.execute(record.value());
+        SINGLE_THREAD_EXECUTOR.execute(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        ConsumerRecords<String, String> records = consumer.poll(100);
+                        for (ConsumerRecord<String, String> record : records) {
+                            logger.info("offset=[{}], key=[{}], value=[{}]", record.offset(), record.key(), record.value());
+                            CommonConsumer commonConsumer = consumerMap.get(record.topic());
+                            commonConsumer.execute(record.value());
+                        }
+                    } catch (Exception e) {
+                        logger.error("", e);
+                    }
                 }
-            } catch (Exception e) {
-                logger.error("", e);
             }
-        }
+        });
     }
 }

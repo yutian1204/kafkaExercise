@@ -1,6 +1,7 @@
 package com.crazy.business.web.controller;
 
 import com.crazy.business.service.VisitService;
+import com.crazy.common.util.IpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -21,15 +22,9 @@ public class VisitController {
     @Resource
     private VisitService visitService;
 
-    @RequestMapping("redirect")
-    public String redirect() {
-        return "excelUpload";
-    }
-
-    @RequestMapping("index")
+    @RequestMapping("index.do")
     public String upload(HttpServletRequest httpRequest) {
-        String remoteAddress = httpRequest.getRemoteAddr();
-        visitService.save(remoteAddress);
+        visitService.save(IpUtil.getPeerIp(httpRequest));
         return "success";
     }
 }
