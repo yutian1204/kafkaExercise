@@ -79,6 +79,7 @@ public class SimpleConsumer implements InitializingBean {
                         }
                     } catch (Exception e) {
                         logger.error("", e);
+                        throw new RuntimeException("Fuck the exception!");
                     }
                 }
             }
