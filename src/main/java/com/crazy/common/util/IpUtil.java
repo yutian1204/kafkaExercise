@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * Author: crazy.jack
- * Date:   16-2-2
- */
+
 public class IpUtil {
     private static final Logger logger = LoggerFactory.getLogger(IpUtil.class);
 

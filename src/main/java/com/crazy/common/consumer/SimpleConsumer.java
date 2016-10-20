@@ -17,10 +17,7 @@ import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * Author: crazy.jack
- * Date:   16-1-27
- */
+
 @Component
 public class SimpleConsumer implements InitializingBean {
     private static final Logger logger = LoggerFactory.getLogger(SimpleConsumer.class);
@@ -50,6 +47,7 @@ public class SimpleConsumer implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         try {
+
             logger.warn("Loading simple consumer start!");
             Properties props = new Properties();
             props.put("bootstrap.servers", serverList);

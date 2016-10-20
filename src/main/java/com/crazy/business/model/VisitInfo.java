@@ -2,10 +2,7 @@ package com.crazy.business.model;
 
 import java.util.Date;
 
-/**
- * Author: crazy.jack
- * Date:   16-1-27
- */
+
 public class VisitInfo {
 
     private String ip;

@@ -2,12 +2,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>qunar.common</groupId>
-        <artifactId>qunar-supom-generic</artifactId>
-        <version>1.3.3</version>
-    </parent>
-
     <groupId>com.crazy</groupId>
     <artifactId>kafka-async-message</artifactId>
     <packaging>war</packaging>
@@ -18,29 +12,51 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>4.0.1.RELEASE</org.springframework.version>
-        <qunar.common.version>8.1.7</qunar.common.version>
 
-        <com.qunar.base.version>2.2.0</com.qunar.base.version>
-        <com.alibaba.version>1.0.7</com.alibaba.version>
+        <com.alibaba.version>1.0.16</com.alibaba.version>
         <com.h2database.version>1.4.178</com.h2database.version>
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
-        <com.alibaba.druid.version>1.0.16</com.alibaba.druid.version>
 
         <junit.version>4.11</junit.version>
+        <mysql.connector.version>5.1.21</mysql.connector.version>
+        <org.mybatis.mybatis.version>3.2.8</org.mybatis.mybatis.version>
+        <org.mybatis.spring.version>1.2.2</org.mybatis.spring.version>
+        <guava.version>18.0</guava.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.connector.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${org.mybatis.mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${org.mybatis.spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.5</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>${com.alibaba.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.qunar.base</groupId>
-                <artifactId>meerkat-mybatis</artifactId>
-                <version>${com.qunar.base.version}</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
@@ -82,17 +98,58 @@
             </dependency>
 
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid</artifactId>
-                <version>${com.alibaba.druid.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>org.apache.kafka</groupId>
                 <artifactId>kafka-clients</artifactId>
                 <version>0.9.0.0</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>1.7.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.1.7</version>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>6.0.2</version>
+            </dependency>
+            <!-- json -->
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+                <version>1.9.9</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>2.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-dbcp</groupId>
+                <artifactId>commons-dbcp</artifactId>
+                <version>1.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>4.2.1.RELEASE</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -148,16 +205,6 @@
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
         </dependency>
-        <!-- qunar -->
-        <dependency>
-            <groupId>qunar.common</groupId>
-            <artifactId>common-web</artifactId>
-            <version>${qunar.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.qunar.base</groupId>
-            <artifactId>meerkat-mybatis</artifactId>
-        </dependency>
         <!-- servlet -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -196,13 +243,38 @@
             <artifactId>spring-test</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.qunar.corpdev</groupId>
-            <artifactId>commons</artifactId>
-            <version>0.0.9</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
         </dependency>
     </dependencies>
 
     <build>
         <finalName>KafkaAsyncMessage</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>

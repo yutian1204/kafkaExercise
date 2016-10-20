@@ -15,6 +15,7 @@
                 <value>classpath:conf/system.properties</value>
             </list>
         </property>
+        <property name="ignoreUnresolvablePlaceholders" value="true" />
     </bean>
 
     <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">

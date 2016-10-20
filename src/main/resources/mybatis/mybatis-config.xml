@@ -12,9 +12,4 @@
     <typeHandlers>
     </typeHandlers>
 
-    <plugins>
-        <plugin interceptor="com.qunar.base.meerkat.orm.mybatis.support.StatementHandlerInterceptor"/>
-        <plugin interceptor="com.qunar.base.meerkat.orm.mybatis.support.ResultSetHandlerInterceptor"/>
-    </plugins>
-
 </configuration>

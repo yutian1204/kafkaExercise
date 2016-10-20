@@ -8,10 +8,7 @@ import org.springframework.beans.factory.InitializingBean;
 
 import java.util.Properties;
 
-/**
- * Author: crazy.jack
- * Date:   16-1-27
- */
+
 public class SimpleProducerImpl implements InitializingBean, SimpleProducer {
     private static final Logger logger = LoggerFactory.getLogger(SimpleProducerImpl.class);
 

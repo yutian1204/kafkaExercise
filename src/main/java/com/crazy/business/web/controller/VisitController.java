@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * Author: crazy.jack
- * Date:   15-11-24
- */
+
 @Controller
 @RequestMapping("/")
 public class VisitController {
@@ -22,7 +19,7 @@ public class VisitController {
     @Resource
     private VisitService visitService;
 
-    @RequestMapping("index.do")
+    @RequestMapping("/index.do")
     public String upload(HttpServletRequest httpRequest) {
         visitService.save(IpUtil.getPeerIp(httpRequest));
         return "success";

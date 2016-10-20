@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 
-/**
- * Author: crazy.jack
- * Date:   16-1-27
- */
+
 @Service
 public class VisitService {
     private static final Logger logger = LoggerFactory.getLogger(VisitService.class);

@@ -9,10 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 
-/**
- * Author: crazy.jack
- * Date:   16-1-27
- */
 public class VisitConsumer implements CommonConsumer {
     private static final Logger logger = LoggerFactory.getLogger(VisitConsumer.class);
 

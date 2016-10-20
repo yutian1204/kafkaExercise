@@ -1,5 +1,4 @@
 set names utf8mb5;
-use test;
 create table visit_info (
 `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
 `ip` varchar(64) NOT NULL COMMENT 'ip',
