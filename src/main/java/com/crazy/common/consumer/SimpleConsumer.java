@@ -55,7 +55,6 @@ public class SimpleConsumer implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         try {
-
             logger.warn("Loading simple consumer start!");
             Properties props = new Properties();
             props.put("bootstrap.servers", serverList);
@@ -73,23 +72,21 @@ public class SimpleConsumer implements InitializingBean {
             throw new RuntimeException("");
         }
 
-        SINGLE_THREAD_EXECUTOR.execute(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        ConsumerRecords<String, String> records = consumer.poll(100);
-                        for (ConsumerRecord<String, String> record : records) {
-                            logger.info("offset=[{}], key=[{}], value=[{}]", record.offset(), record.key(), record.value());
-                            WORK_THREADS.submit((Runnable) () -> {
-                                CommonConsumer commonConsumer = consumerMap.get(record.topic());
-                                commonConsumer.execute(record.value());
-                            });
-                        }
-                    } catch (Exception e) {
-                        logger.error("", e);
-                        throw new RuntimeException("Fuck the exception!");
+        SINGLE_THREAD_EXECUTOR.execute(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(10000);
+                    ConsumerRecords<String, String> records = consumer.poll(100);
+                    for (ConsumerRecord<String, String> record : records) {
+                        logger.info("offset=[{}], key=[{}], value=[{}]", record.offset(), record.key(), record.value());
+                        WORK_THREADS.submit((Runnable) () -> {
+                            CommonConsumer commonConsumer = consumerMap.get(record.topic());
+                            commonConsumer.execute(record.value());
+                        });
                     }
+                } catch (Exception e) {
+                    logger.error("", e);
+                    throw new RuntimeException("Fuck the exception!");
                 }
             }
         });
