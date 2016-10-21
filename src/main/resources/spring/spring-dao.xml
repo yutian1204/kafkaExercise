@@ -9,15 +9,6 @@
 
     <!--<context:property-placeholder location="classpath:conf/system.properties," ignore-unresolvable="true"/>-->
 
-    <bean id="jdbcPropertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:conf/system.properties</value>
-            </list>
-        </property>
-        <property name="ignoreUnresolvablePlaceholders" value="true" />
-    </bean>
-
     <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
         <property name="mergeSql" value="true"/>
     </bean>

@@ -10,8 +10,7 @@
         <prudent>false</prudent>
     </appender>
 
-    <logger name="com.crazy.jacke.common.util.MultipartFileResolver" level="INFO"/>
-    <logger name="com.crazy.jacke.web.exception.SimpleExceptionResolver" level="INFO"/>
+    <logger name="com.crazy.business.web.exception.SimpleExceptionResolver" level="INFO"/>
 
     <root level="INFO">
         <appender-ref ref="fileAppender"/>

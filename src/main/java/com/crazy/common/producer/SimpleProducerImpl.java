@@ -29,13 +29,13 @@ public class SimpleProducerImpl implements InitializingBean, SimpleProducer {
             logger.warn("Loading simple producer start!");
             Properties props = new Properties();
             props.put("bootstrap.servers", serverList);
+            props.put("key.serializer", keySerializer);
+            props.put("value.serializer", valueSerializer);
             props.put("acks", ack);
+            props.put("buffer.memory", bufferMemory);
             props.put("retries", retries);
             props.put("batch.size", batchSize);
             props.put("linger.ms", lingerMs);
-            props.put("buffer.memory", bufferMemory);
-            props.put("key.serializer", keySerializer);
-            props.put("value.serializer", valueSerializer);
 
             producer = new KafkaProducer<String, String>(props);
             logger.warn("Loading simple producer finish!");

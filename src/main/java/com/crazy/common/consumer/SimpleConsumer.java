@@ -1,7 +1,6 @@
 package com.crazy.common.consumer;
 
 import com.google.common.collect.Lists;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -16,6 +15,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 
 
 @Component
@@ -37,7 +38,14 @@ public class SimpleConsumer implements InitializingBean {
     @Value("${consumer.value.deserializer}")
     private String valueDeserializer;
 
-    private static final ExecutorService SINGLE_THREAD_EXECUTOR = Executors.newSingleThreadExecutor(new ThreadFactoryBuilder().setNameFormat("Kafka-Common-Consumer").build());
+    private final static ScheduledExecutorService SINGLE_THREAD_EXECUTOR = Executors.newSingleThreadScheduledExecutor();
+
+    private static final ExecutorService WORK_THREADS = Executors.newFixedThreadPool(3, new ThreadFactory() {
+        @Override
+        public Thread newThread(Runnable r) {
+            return new Thread(r);
+        }
+    });
 
     private KafkaConsumer<String, String> consumer;
 
@@ -64,6 +72,7 @@ public class SimpleConsumer implements InitializingBean {
             logger.error("Loading simple consumer exception!", e);
             throw new RuntimeException("");
         }
+
         SINGLE_THREAD_EXECUTOR.execute(new Runnable() {
             @Override
             public void run() {
@@ -72,8 +81,10 @@ public class SimpleConsumer implements InitializingBean {
                         ConsumerRecords<String, String> records = consumer.poll(100);
                         for (ConsumerRecord<String, String> record : records) {
                             logger.info("offset=[{}], key=[{}], value=[{}]", record.offset(), record.key(), record.value());
-                            CommonConsumer commonConsumer = consumerMap.get(record.topic());
-                            commonConsumer.execute(record.value());
+                            WORK_THREADS.submit((Runnable) () -> {
+                                CommonConsumer commonConsumer = consumerMap.get(record.topic());
+                                commonConsumer.execute(record.value());
+                            });
                         }
                     } catch (Exception e) {
                         logger.error("", e);
@@ -82,5 +93,6 @@ public class SimpleConsumer implements InitializingBean {
                 }
             }
         });
+
     }
 }

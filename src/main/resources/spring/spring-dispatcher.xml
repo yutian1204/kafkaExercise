@@ -22,8 +22,4 @@
 
     <bean id="exceptionResolver" class="com.crazy.business.web.exception.SimpleExceptionResolver" />
 
-    <!--<mvc:interceptors>-->
-            <!--<bean class="com.qunar.jacke.web.interceptor.AuthIntercepter" />-->
-    <!--</mvc:interceptors>-->
-
 </beans>

@@ -19,7 +19,7 @@ public class VisitController {
     @Resource
     private VisitService visitService;
 
-    @RequestMapping("/index.do")
+    @RequestMapping("index.do")
     public String upload(HttpServletRequest httpRequest) {
         visitService.save(IpUtil.getPeerIp(httpRequest));
         return "success";

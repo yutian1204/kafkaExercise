@@ -22,6 +22,7 @@
         <org.mybatis.mybatis.version>3.2.8</org.mybatis.mybatis.version>
         <org.mybatis.spring.version>1.2.2</org.mybatis.spring.version>
         <guava.version>18.0</guava.version>
+        <thrift.version>0.9.3</thrift.version>
     </properties>
 
     <dependencyManagement>
@@ -150,6 +151,12 @@
                 <artifactId>spring-test</artifactId>
                 <version>4.2.1.RELEASE</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.thrift</groupId>
+                <artifactId>libthrift</artifactId>
+                <version>${thrift.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -262,6 +269,10 @@
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -271,8 +282,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
