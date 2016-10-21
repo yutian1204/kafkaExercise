@@ -12,15 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping(value = "/kafka")
 public class VisitController {
     private static final Logger logger = LoggerFactory.getLogger(VisitController.class);
 
     @Resource
     private VisitService visitService;
 
-    @RequestMapping("index.do")
-    public String upload(HttpServletRequest httpRequest) {
+    @RequestMapping(value = "/visit")
+    public String visit(HttpServletRequest httpRequest) {
         visitService.save(IpUtil.getPeerIp(httpRequest));
         return "success";
     }

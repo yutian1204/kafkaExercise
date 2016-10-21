@@ -14,8 +14,8 @@
 <h1 align="center">Hi, guy! Welcome to test kafka. It's a amazing trip!</h1>
 <br>
 
-<form action="/index.do" method="post" style="text-align: center">
-<input type="submit" value="Test" align="center">
+<form action="/kafka/visit" method="post" style="text-align: center">
+<input type="submit" value="submit" align="center">
 </form>
 
 </body>
